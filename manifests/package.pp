@@ -147,10 +147,12 @@ class logstash::package {
 
   if ($logstash::software_provider == 'package') {
 
+    class { 'logstash::repo': }
     package { $logstash::params::package:
       ensure   => $package_ensure,
       source   => $pkg_source,
-      provider => $pkg_provider
+      provider => $pkg_provider,
+      require  => Class['logstash::repo']
     }
 
   } else {
